@@ -1,0 +1,14 @@
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - 80:80 # ホストの80ポートをこのコンテナの80に転送する
+      - 443:443 # ホストの443ポートをこのコンテナの443に転送する
+    volumes:
+      # マウントする必要のあるもの
+      - /etc/letsencrypt:/etc/letsencrypt # あとで発行する証明書の置き場
+      - ./conf:/etc/nginx/conf.d # 設定ファイルの置き場
+      - ./logs:/var/log/nginx # nginxのlog等の置き場
+      - ./html:/usr/share/nginx/html # 公開する内容の置き場
+    environment:
+      - TZ=Asia/Tokyo # コンテナ内のtimezone
